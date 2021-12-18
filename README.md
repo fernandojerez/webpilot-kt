@@ -7,12 +7,14 @@ WebpilotConfig(
     sandboxed = false,
     remotePort = 33333,
     chromeExecutable = "<path-chrome>"
-).runBlocking {
-    Puppeteer().start(it).use { robot ->
-        robot.newTab {
-            navigate("http://localhost:8080/tests") {
-                assertEquals(expectedContent, content())
-                flag.set(true)
+) let {
+    runBlocking {
+        Puppeteer().start(it).use { robot ->
+            robot.newTab {
+                navigate("http://localhost:8080/tests") {
+                    assertEquals(expectedContent, content())
+                    flag.set(true)
+                }
             }
         }
     }
